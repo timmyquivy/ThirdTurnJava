@@ -4,7 +4,7 @@ public class TestTokens {
 
     public static void main(String [] args) throws Exception {  // Main string
     
-    /* DECLARE BASE PARAMETERS */
+    /* DECLARE BASE PARAMETERS. THIS SECTION NEVER NEEDS TO BE TOUCHED */
 	 int finish = 0;
     String start = "";
 	 String num = "";
@@ -53,7 +53,7 @@ public class TestTokens {
 				if (foo) {
 				status = ""; pts = "";
             
-/* GRAB DATA FROM INPUT */
+/* GRAB DATA FROM INPUT. INPUT FILE IS TESTRACE.TXT */
 
 //div = "2015 Super DIRTcar Big-Block Modified Series|Super DIRT Week Big-Block Modified Championship";
 // crap = st.nextToken(); 
