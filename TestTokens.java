@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.*;
 public class TestTokens {   
 
+/* FURTHER DOCUMENTATION COMING. THANKS FOR YOUR PATIENCE :) */
+
     public static void main(String [] args) throws Exception {  // Main string
     
     /* DECLARE BASE PARAMETERS. THIS SECTION NEVER NEEDS TO BE TOUCHED */
@@ -49,14 +51,12 @@ public class TestTokens {
 					if (finish != 0) { System.out.println("{{RacePage/Result|"+fin+"|"+start+"|"+num+"|"+driver+"|"+spon+"|"+make+"|"+laps+"|"+led+"|"+status+"|"+pts+"|"+div+"}}"); }
 					  finish = Integer.parseInt(crap); }
 					else { driver = driver+";"+crap; }
-					
 				if (foo) {
 				status = ""; pts = "";
             
 /* GRAB DATA FROM INPUT. INPUT FILE IS TESTRACE.TXT */
 
 //div = "2015 Super DIRTcar Big-Block Modified Series|Super DIRT Week Big-Block Modified Championship";
-// crap = st.nextToken(); 
  //crap = st.nextToken(); 
 //crap = st.nextToken();
 start = st.nextToken();
