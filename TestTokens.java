@@ -60,26 +60,26 @@ public class TestTokens {
  //crap = st.nextToken(); 
 //crap = st.nextToken();
 start = st.nextToken();
-driver = st.nextToken();
-crap = st.nextToken();
 num = st.nextToken();
+driver = st.nextToken();
+// crap = st.nextToken();
 //driver = "|"+driver;
-/*
+
 //crap = st.nextToken();
 
 //start = st.nextToken();
-crap = st.nextToken();
-crap = st.nextToken();
-//spon = st.nextToken();
+//crap = st.nextToken();
+//crap = st.nextToken();
+spon = st.nextToken();
 //spon = "";
-//make = st.nextToken();
+make = st.nextToken();
 laps = st.nextToken();
 crap = st.nextToken();
 status = st.nextToken();
 led = st.nextToken();
-*/
+
 //status = "";
-//pts = st.nextToken();
+pts = st.nextToken();
 //crap = st.nextToken(); 
 //status = st.nextToken();
 //crap = st.nextToken();
