@@ -33,42 +33,70 @@ public static void main(String[] args) throws Exception
 	 String t10 = "";
 	 String money = "";
 	   FileReader fr = new FileReader("points.txt");
-            BufferedReader br = new BufferedReader(fr);        
+            BufferedReader br = new BufferedReader(fr); 
 			String inLine = br.readLine();
 			inLine = inLine.trim();
+         
 	while (inLine  != null) {
        StringTokenizer st = new StringTokenizer(inLine,"\t");
+ //    finish = st.nextToken();
+ //  finish = "";
+   //finish = finish+"|";  
+  //  crap = st.nextToken();       
+//crap = finish;    
+ //p = "";
 
-finish = st.nextToken();
- //  crap = st.nextToken();        
-fname = st.nextToken();
+    fname = st.nextToken();
+ //   points = st.nextToken();
+ // crap = st.nextToken();       
+  //fname = fname+" "+st.nextToken();
+ ////////////// /crap = st.nextToken();
+  //  t10 = st.nextToken();
+
+ //    points = points+"|"+st.nextToken();
+ // points= points+"|"+st.nextToken();
+  //points = points+"|D-III";
+    starts = st.nextToken();
+
+if (finish.equals("-1")) { 
+  finish = ""; 
+   points = ""; 
+  }
+  
 //fname = fname+" "+st.nextToken();
-if (finish.equals("-1")) { finish = ""; points = ""; }
-//fname = fname+" "+st.nextToken();
-points = st.nextToken();
+ //// t10 =st.nextToken();
+ //points = points+"|D-II";
 //points = points+"|D-IV";
 //points = points+"|"+st.nextToken();
- if (points.equals("-1")) { points = ""; finish = ""; }
-starts = st.nextToken();
-//starts = "1+";
-//starts = starts+"+";
-w = st.nextToken();
-t5 = st.nextToken();
-t10 = st.nextToken();
+ if (points.equals("-1")) { 
+    points = ""; 
+   finish = ""; }
+//finish = "";
+ 
+   w = st.nextToken();
+   t5 = st.nextToken();
+  t10 = st.nextToken();
+ ////points = st.nextToken();
+// p = st.nextToken(); 
 //t10 = t5;
-//p = "0";
-//p =st.nextToken();
-
+   // p = "0";
+///points = points+"|"+st.nextToken();
+   // p = st.nextToken();
 //fname = fname.toLowerCase();
 // fname = toTitleCase(fname);
-//p = p+"|"+st.nextToken();
+//p = p+"|MA||"+st.nextToken();
+ //  p = p+"|"+st.nextToken()+"||"+st.nextToken();
+ // p = p+"|"+st.nextToken();
+ /// p = p+"|"+st.nextToken();
+
 fname = fname.trim();
 finish = finish.trim();
 points = points.trim();
 fname = DriverStrip(fname);
 
+  //System.out.println("{{DivPoints|"+fname+"|"+finish+"|"+points+"|D-V|"+starts+"|"+w+"|"+t5+"|"+t10+"|"+p+"||}}");
 // System.out.println("{{LocalTrack-Points|"+fname+"|"+finish+"|"+points+"}}");
- System.out.println("{{Points|"+fname+"|"+finish+"|"+points+"|"+starts+"|"+w+"|"+t5+"|"+t10+"|"+p+"|}}");
+    System.out.println("{{Standings|"+fname+"|"+finish+"|"+points+"|"+starts+"|"+w+"|"+t5+"|"+t10+"|"+p+"|}}");
 		inLine =	br.readLine();
 	} // end while
  } // end function
@@ -86,15 +114,17 @@ fname = DriverStrip(fname);
  delimiter = "/";
  tokens= driver.split(delimiter);
   driver = tokens[0];
-  driver = driver.replace("Ã³", "o");
-    driver = driver.replace("Ã©", "e");
-  driver = driver.replace("Ãº", "u");
-  driver = driver.replace("Ã“", "O");
-  driver = driver.replace("Ã­", "i");
-driver = driver.replace("Ã¡", "a");
+  driver = driver.replace("ó", "o");
+    driver = driver.replace("é", "e");
+  driver = driver.replace("ú", "u");
+  driver = driver.replace("Ó", "O");
+  driver = driver.replace("í", "i");
+    driver = driver.replace("(r)", "");
+  driver = driver.replace("(R)", "");
+driver = driver.replace("á", "a");
    driver = driver.trim();
-   //driver = driver.toLowerCase();
-   //driver = toTitleCase(driver);
+  //driver = driver.toLowerCase();
+  //  driver = toTitleCase(driver);
    return driver;
  
     }

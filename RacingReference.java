@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.*;
 import java.io.IOException;
 
-public class TestTokens {   
+public class RacingReference {   
 
     public static void main(String [] args) throws Exception {  // Main string
     
-  /* DECLARE BASE PARAMETERS */
+    /* DECLARE BASE PARAMETERS */
 	 int finish = 0;
     String start = "";
 	 String num = "";
@@ -14,12 +14,12 @@ public class TestTokens {
 	 String spon = "";
     String make = "";
 	 boolean foo = false;
-    String DNQ = "";
 	 String spontest = "";
     String laps = "";
     boolean noqualify = false;
-   String checkLaps = "foo";
-    String led = "";
+    String DNQ = "";
+	 String checkLaps = "foo";
+	 String led = "";
     int position = 0;
 	 String pts = "";
 	 String fin = "";
@@ -30,6 +30,8 @@ public class TestTokens {
 	 	int serfinish = 0;
 				int L1 = 1;
  			int E1 = 1;
+         //   FileReader fr = new FileReader("TestRace.txt"); // File must be in directory called "TestRace.txt"
+     //       BufferedReader br = new BufferedReader(fr);     
      InputStream inputStream = new FileInputStream("TestRace.txt");
      BufferedReader br = new BufferedReader (new InputStreamReader (inputStream, "UTF8"));
 			String inLine = br.readLine();
@@ -37,25 +39,22 @@ public class TestTokens {
 			while (inLine  != null) {
          inLine = InputWork(inLine);
     inLine = inLine.replace("#","\t");
-     inLine = inLine.replace(" »//","; ");
-      inLine = inLine.replace("»","\t");
+   // inLine = inLine.replace(",","\t");
+     //         inLine = inLine.replace(". ","\t");
+      //          inLine = inLine.replace(" (","\t");
+
+       //  inLine = inLine.replace(" ","\t");
 
 					foo = false;
 			      StringTokenizer st = new StringTokenizer(inLine,"\t");
 					crap = st.nextToken();
-               crap = crap.replace(" DNF", "");
             crap = crap.replace(".", "");
-                       if (crap.equals("DNF") || crap.equals("DQ") || crap.equals("NC") || crap.equals("DNC"))
-             { crap = Integer.toString(finish+1); }
-
             crap = crap.replace(":", "");
               crap = crap.replace("  ", "\t");
             crap = crap.trim();
-          
             crap = crap.replace(" (DNF)", "");
                 crap = crap.replace("(", "");
 				   crap = crap.replace(")", "");
-
 			if (checkIfNumber(crap))
 					{ foo = true;
 
@@ -75,18 +74,27 @@ public class TestTokens {
 				if (foo) {
 				status = ""; pts = ""; noqualify = true;
 /* GRAB DATA FROM INPUT */
-  // div = "Tour-Type Modified"; /* ONLY NEEDED IF YOU ARE USING MANUAL CATEGORIZATION */
-  //  start = st.nextToken(); 
-  num = st.nextToken();
-    driver = st.nextToken();
-   driver = driver+" "+st.nextToken(); /* FOR USE IF DRIVER NAME IS SEPARATED BY TAB BY FNAME AND LNAME */
- //  driver = driver+"; "+st.nextToken(); /* FOR USE IF MULTIPLE DRIVERS */
-  //crap = st.nextToken(); /* You can use as many "craps" as you need for any included input that is not to be ingested (like $$$) */
-  // spon = st.nextToken();
-  //  make = st.nextToken();
-  // laps = st.nextToken();
-    led = "0"; /* Use this if lap leaders are known but not actually included in the input file (like a USAC race) */
- // pts = st.nextToken();
+//  div = "1979 SCCA CART Indy Car Series|Indianapolis 500";
+     start = st.nextToken();
+   num = st.nextToken();
+       driver = st.nextToken();
+  // crap = st.nextToken();
+  spon = st.nextToken();
+    make = st.nextToken();
+       laps = st.nextToken();
+  //crap = st.nextToken();
+
+    status = st.nextToken();
+    if (status.contains("laps")) { status = "running"; }
+        if (status.contains("lap")) { status = "running"; }
+
+    led = st.nextToken();
+  try {
+      pts = st.nextToken();
+        } catch (NoSuchElementException ex) {
+         pts = "";   
+        }   
+//if (pts.equals("-1")) { div = "1979 USAC Champ Car Series|Indianapolis 500"; }
 //inLine = br.readLine();
 
 //status = status.trim();
@@ -95,12 +103,10 @@ driver = driver.trim();
 DNQ = DNQ+driver+"; ";
 noqualify = false;
  }
- /* MANIPULATE DATA */
- 
-	 	 driver = returnName(driver);
- // driver = DriverCase(driver); /* USE THIS IF DRIVER NAME IS ALL UPPERCASE */
 
-/* TRIMMING - Just removes extra whitespace */
+
+/* MANIPULATE DATA */
+
 
 	start = start.trim();
 	  spon = SponStrip(spon);
@@ -113,15 +119,6 @@ noqualify = false;
    laps = laps.replace("-", "0");
    num = NumStrip(num);
 	led = led.trim();
-   
-   /* DNQ/DNS system for races ... If DNQs are included in the input, give them the finish of -1 */
-   
-   if (finish == -1) { 
-     status = "DNQ";
-     start = "";
-     led = "";
-     laps = "";
-   }
 	laps = laps.trim();
 	status = status.trim();
    pts = pts.trim();
@@ -148,9 +145,34 @@ noqualify = false;
   */
   
 	make = MakeStrip(make);
-
+		 driver = returnName(driver);
 	fin = Integer.toString(finish);
+   if (fin.equals("311")) { fin = ""; status="non-qualifier"; }
    if (laps.equals("DQ")) { laps = ""; status="DQ"; }
+// driver = "|"+driver;
+/*
+	// NASCAR North Instance
+	if (!pts.equals(""))  {
+	if (pts.equals("OC")) { div="||Yes||No"; }
+	else {
+
+   position = position + 1; 
+	div = "||No||Yes|"+position;
+	
+}
+}
+
+*/
+/* 
+   // NASCAR West Instance
+    if (num.contains("W")) { div = "||No||Yes"; }
+*/
+
+ // NASCAR Sweepstakes Instance
+ /*
+    if (make.contains("Convert")) { div = "||No||Yes"; }
+   else { div = "||Yes||No"; }
+*/
    
 	if (fin.equals("-1")) { fin = ""; } 
 	if (spon.equals(driver)) { spon = ""; }
@@ -233,35 +255,17 @@ inLine = inLine.replace ("\t ","\t");
          }
 
 public static String DriverStrip(String driver) {
-       	String delimiter = " \\(Rookie";
+        	String delimiter = " \\(Rookie";
 	String[] tokens= driver.split(delimiter);
-   /*
   driver = tokens[0];
  delimiter = "/";
  tokens= driver.split(delimiter);
- */
   driver = tokens[0];
  driver = driver.replace(" (SA)", "");
   driver = driver.replace(" (VIC)", "");
     driver = driver.replace(" (Vic)", "");
 driver = driver.replace("VanderWeerd", "Vander Weerd");
  driver = driver.replace(" (NSW)", "");
-  driver = driver.replace(" (USA)", "");
- driver = driver.replace(" (GBR)", "");
- driver = driver.replace(" (DEU)", "");
- driver = driver.replace(" (FIN)", "");
-  driver = driver.replace(" (BEL)", "");
-  driver = driver.replace(" (BRA)", "");
- driver = driver.replace(" (JPN)", "");
-  driver = driver.replace(" (MEX)", "");
-    driver = driver.replace(" (AUS)", " (AU)");
- driver = driver.replace(" (NOR)", "");
- driver = driver.replace(" (ESP)", "");
- driver = driver.replace(" (PRT)", "");
- driver = driver.replace(" (CAN)", "");
- driver = driver.replace(" / ", "; ");
- driver = driver.replace ("â", "a");
-driver = driver.replace ("ô", "o"); 
   driver = driver.replace(" (NZL)", "");
   driver = driver.replace(" (TAS)", "");
  driver = driver.replace(" (Qld)", "");
@@ -273,9 +277,6 @@ driver = driver.replace ("ô", "o");
     driver = driver.replace(" (J)", "");
     driver = driver.replace(" (L)", "");
     driver = driver.replace("  (R)", "");
-        driver = driver.replace("(R)", "");
-    driver = driver.replace("Ø", "O");
-    driver = driver.replace("ì", "i");
         driver = driver.replace(" (AM)", "");
                 driver = driver.replace(" (Pro)", "");
                 driver = driver.replace(" (ProAm)", "");
@@ -332,17 +333,9 @@ driver = driver.replace(" ©", "");
   */
 
 	 driver = driver.trim();
-   driver = driver.replace("1 ", "");
-     driver = driver.replace("2 ", "");
-  driver = driver.replace("3 ", "");
-  driver = driver.replace("4 ", "");
-  driver = driver.replace("5 ", "");
-  driver = driver.replace("6 ", "");
-  driver = driver.replace("7 ", "");
-  driver = driver.replace("8 ", "");
-  driver = driver.replace("9 ", "");
-  driver = driver.replace("10 ", "");
-
+  // driver = driver.toLowerCase();
+  // driver = toTitleCase(driver);
+  
           driver = driver.replace("á", "a");
 	 driver = driver.replace("ë", "e");
   driver = driver.replace("ú", "u");
@@ -372,13 +365,6 @@ make = make.replace(" Fusion", "");
 
           return make;
     }
-    
-   public static String DriverCase(String driver) {
-    driver = driver.toLowerCase();
-    driver = toTitleCase(driver);
-
-          return driver;
-    } 
 
 public static String NumStrip(String num) {
         	String delimiter = " \\(";
